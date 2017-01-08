@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>walk</groupId>
-  <artifactId>walk</artifactId>
+  <groupId>com.sharewalk</groupId>
+  <artifactId>sharewalk</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>walk Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  <name>sharewalk</name>
 
   <dependencies>
     <dependency>
@@ -18,7 +17,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>4.0.3.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -29,22 +28,22 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.0.3.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.0.3.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>4.0.3.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>4.3.5.Final</version>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>5.2.5.Final</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -152,8 +151,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>

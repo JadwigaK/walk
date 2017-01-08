@@ -8,17 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by Jadwiga on 2017-01-07.
- */
-
 @Service
 public class WalkServiceImpl implements WalkService {
 
-    @Autowired
-    private WalkDAO walkDAO;
+    private final WalkDAO walkDAO;
 
-    public void setWalkDAO(WalkDAO walkDAO) {
+    @Autowired
+    public WalkServiceImpl(WalkDAO walkDAO) {
         this.walkDAO = walkDAO;
     }
 
@@ -26,5 +22,11 @@ public class WalkServiceImpl implements WalkService {
     @Transactional
     public List<Walk> listWalks() {
         return this.walkDAO.listWalks();
+    }
+
+    @Override
+    @Transactional
+    public void addWalk(Walk walk) {
+        walkDAO.addWalk(walk);
     }
 }

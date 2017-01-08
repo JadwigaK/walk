@@ -1,8 +1,5 @@
 package com.sharewalk.controller;
 
-/**
- * Created by Jadwiga on 2017-01-07.
- */
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
