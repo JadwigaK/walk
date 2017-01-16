@@ -1,5 +1,7 @@
 package com.sharewalk.dao;
 
+import com.sharewalk.model.Comment;
+import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +29,28 @@ public class WalkDAOImpl implements WalkDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Walk> listWalks(String startsWith) {
+        TypedQuery<Walk> query =
+                entityManager.createNamedQuery("Walk.findAllStartsWith", Walk.class).setParameter("startsWith",startsWith+"%");
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Walk> getWalk(Long id) {
+        TypedQuery<Walk> query =
+                entityManager.createNamedQuery("Walk.findByID", Walk.class).setParameter("id",id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Comment> getWalkComments(Long id) {
+        TypedQuery<Comment> query =
+                entityManager.createNamedQuery("Comment.findByIDComments", Comment.class).setParameter("walkid",id);
+        return query.getResultList();
+    }
+
+    //add jeszcze nie testuje
     @Override
     public void addWalk(Walk walk) {
         entityManager.persist(walk);
