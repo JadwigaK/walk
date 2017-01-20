@@ -89,15 +89,15 @@ public class WalkDAOImplTest {
         assertEquals(list.get(0).toString(),"Walk [id=0, name=walk 1]");
     }
 
-    @Test
-    public void getWalkCommentsTest(){
-        Long id = Long.valueOf(1);
-        when(entityManager.createNamedQuery("Comment.findByIDComments", Comment.class)).thenReturn(query3);
-        when(query3.setParameter("walkid",id)).thenReturn(query4);
-        when(query4.getResultList()).thenReturn(Arrays.asList(new Comment("comment 1", 1, 1)));
-
-        List<Comment> list = instance.getWalkComments(id);
-        assertEquals(list.size(),1);
-        assertEquals(list.get(0).toString(),"Comment [id=0, comment=comment 1]");
-    }
+//    @Test
+//    public void getWalkCommentsTest(){
+//        Long id = Long.valueOf(1);
+//        when(entityManager.createNamedQuery("Comment.findByIDComments", Comment.class)).thenReturn(query3);
+//        when(query3.setParameter("walkid",id)).thenReturn(query4);
+//        when(query4.getResultList()).thenReturn(Arrays.asList(new Comment("comment 1", 1, 1)));
+//
+//        List<Comment> list = instance.getWalkComments(id);
+//        assertEquals(list.size(),1);
+//        assertEquals(list.get(0).toString(),"Comment [id=0, comment=comment 1]");
+//    }
 }

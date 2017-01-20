@@ -1,18 +1,15 @@
 package com.sharewalk.controller;
 
 import com.sharewalk.dao.WalkDAO;
-import com.sharewalk.model.Comment;
 import com.sharewalk.model.Walk;
 import com.sharewalk.service.WalkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Random;
 
 @Controller
 public class WalkController {
@@ -28,18 +25,7 @@ public class WalkController {
     }
 
     public WalkController(WalkService walkService) {
-
         this.walkService = walkService;
-    }
-
-    //tu jeszcze z tym dodawaniem nie nie jest zrobione to tego nie testuje
-    @RequestMapping(value = "/generate", method = RequestMethod.GET)
-    public String generate() {
-        Random random = new Random();
-        Walk walk = new Walk();
-        walk.setName("some name" + (random.nextInt() % 1000));
-        walkService.addWalk(walk);
-        return "home";
     }
 
     @GetMapping("/walks")
@@ -51,25 +37,41 @@ public class WalkController {
         }
     }
 
-    @GetMapping("/walks/{id}")
-    public ResponseEntity getWalk(@PathVariable("id") Long id) {
-        List<Walk> walk = walkDAO.getWalk(id);
+    @GetMapping("/walks/{user_id}")
+    public ResponseEntity getWalk(@PathVariable("user_id") long user_id) {
+        List<Walk> walk = walkDAO.getWalk(user_id);
         if (walk == null) {
-            return new ResponseEntity("No Walk found for Walk ID " + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No Walk found for Walk ID " + user_id, HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity(walk, HttpStatus.OK);
     }
 
-    @GetMapping("/walks/{id}/comments")
-    public ResponseEntity listComments(@PathVariable("id") Long id) {
-        List<Comment> userWalk = walkDAO.getWalkComments(id);
-        if (userWalk == null) {
-            return new ResponseEntity("No Comments found for Walk ID " + id, HttpStatus.NOT_FOUND);
-        }
+//    @GetMapping("/walks/{user_id}/comments")
+//    public ResponseEntity listComments(@PathVariable("user_id") long user_id) {
+//        List<Comment> userWalk = walkDAO.getWalkComments(user_id);
+//        if (userWalk == null) {
+//            return new ResponseEntity("No Comments found for Walk ID " + user_id, HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity(userWalk, HttpStatus.OK);
+//    }
 
-        return new ResponseEntity(userWalk, HttpStatus.OK);
+    //tu jeszcze z tym dodawaniem nie nie jest zrobione to tego nie testuje
+    @PostMapping("/users/{user_id}/walks")
+    public ResponseEntity<Walk> addNewWalk(@PathVariable("user_id") long user_id, @RequestBody Walk walk) {
+        walk.setUserid(user_id);
+        walkDAO.addNewWalk(walk);
+        return new ResponseEntity(HttpStatus.OK);
     }
+
+    //to tez nie ma jeszcze  testu
+    @PutMapping("/users/{user_id}/walks/{walk_id}")
+    public ResponseEntity<Walk> updateWalk(@PathVariable("user_id") long user_id, @PathVariable("walk_id") long walkid, @RequestBody Walk walk){
+        walk.setUserid(user_id);
+        walk.setId(walkid);
+        walkDAO.updateWalk(walk);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }
 
 

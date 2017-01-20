@@ -1,12 +1,14 @@
 package com.sharewalk.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "public.comment")
 @NamedQueries({
-        @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
-        @NamedQuery(name = "Comment.findByIDComments", query = "SELECT c FROM Comment c where c.walkid= :walkid")
+        @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c")
+        //@NamedQuery(name = "Comment.findByIDComments", query = "SELECT c FROM Comment c where c.walk_id= :walkid")
 })
 
 public class Comment {
@@ -15,22 +17,24 @@ public class Comment {
     @GeneratedValue
     private long id;
 
-    @Column(name = "name")
+    //@JsonProperty("comment")
+    @Column(name = "comment")
     private String comment;
 
-    //@ManyToMany
-    @JoinColumn(name = "walkid")
-    private long walkid;
+    @ManyToOne
+    //@JoinColumn(name = "walk_id")
+    private Walk walk;
 
-    //@ManyToMany
-    @JoinColumn(name = "userid")
-    private long userid;
+    @ManyToOne
+    //@JoinColumn(name = "user_id")
+    private User user;
 
-    public Comment(String comment, long walkid, long userid) {
+    public Comment(String comment) {
         this.comment = comment;
-        this.walkid = walkid;
-        this.userid = userid;
     }
+
+//    public Comment(){
+//    }
 
     public long getId() {
         return id;
@@ -48,20 +52,28 @@ public class Comment {
         this.comment = comment;
     }
 
-    public long getUserid() {
-        return userid;
+    public Walk getWalk() {
+        return walk;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public User getUser() {
+        return user;
     }
 
-    public long getWalkid() {
-        return walkid;
+    public void setWalk(Walk walk) {
+        this.walk = walk;
     }
 
-    public void setWalkid(long walkid) {
-        this.walkid = walkid;
+    public void setWalkId(long id) {
+        walk.setId(id);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setUserId(long id) {
+        user.setId(id);
     }
 
     @Override

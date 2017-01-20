@@ -27,22 +27,29 @@ public class WalkServiceImpl implements WalkService {
 
     @Override
     @Transactional
-    public List<Walk> getWalk(Long id) {
+    public List<Walk> getWalk(long id) {
         return this.walkDAO.getWalk(id);
     }
 
+//    @Override
+//    public List<Comment> getWalkComments(long id) {
+//        return this.walkDAO.getWalkComments(id);
+//    }
+
     @Override
-    public List<Comment> getWalkComments(Long id) {
-        return this.walkDAO.getWalkComments(id);
+    @Transactional
+    public void addNewWalk(Walk walk) {
+        walkDAO.addNewWalk(walk);
     }
 
     @Override
     @Transactional
-    public void addWalk(Walk walk) {
-        walkDAO.addWalk(walk);
+    public void updateWalk(Walk walk) {
+        walkDAO.updateWalk(walk);
     }
 
     @Override
+    @Transactional
     public List<Walk> listWalks(String startsWith) {
         return this.walkDAO.listWalks(startsWith);
     }

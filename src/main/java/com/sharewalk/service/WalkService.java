@@ -6,9 +6,11 @@ import com.sharewalk.model.Walk;
 import java.util.List;
 
 public interface WalkService {
-    void addWalk(Walk walk);
+
     List<Walk> listWalks();
     List<Walk> listWalks(String startsWith);
-    List<Walk> getWalk(Long id);
-    List<Comment> getWalkComments(Long id);
+    List<Walk> getWalk(long id);
+    //List<Comment> getWalkComments(long id);
+    void addNewWalk(Walk walk);
+    void updateWalk(Walk walk);
 }

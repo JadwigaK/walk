@@ -1,10 +1,15 @@
 package com.sharewalk.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "public.user")
-@NamedQuery(name="User.findAll", query="SELECT c FROM User c")
+@NamedQueries({
+    @NamedQuery(name="User.findAll", query="SELECT c FROM User c")
+})
 public class User {
     @Id
     @Column(name = "id")
@@ -29,7 +34,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String comment) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -37,7 +42,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String comment) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

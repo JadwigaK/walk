@@ -74,12 +74,12 @@ public class WalkControllerTest {
         assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
     }
 
-    @Test
-    public void listCommentsTest(){
-        Long id= Long.valueOf(1);
-        when(walkDAO.getWalkComments(id)).thenReturn(Arrays.asList(new Comment("comment 1", 1, 1), new Comment("comment 2", 1, 2)));
-        ResponseEntity responseEntity = instance.listComments(id);
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        assertEquals(((List)responseEntity.getBody()).size(),2);
-    }
+//    @Test
+//    public void listCommentsTest(){
+//        Long id= Long.valueOf(1);
+//        when(walkDAO.getWalkComments(id)).thenReturn(Arrays.asList(new Comment("comment 1", 1, 1), new Comment("comment 2", 1, 2)));
+//        ResponseEntity responseEntity = instance.listComments(id);
+//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//        assertEquals(((List)responseEntity.getBody()).size(),2);
+//    }
 }
