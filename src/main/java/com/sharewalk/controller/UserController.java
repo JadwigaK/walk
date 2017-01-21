@@ -33,12 +33,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users/{id}/walks")
-    public ResponseEntity getUserWalks(@RequestParam(value = "starts_with", required = false) String startsWith, @PathVariable("id") long userid) {
+    @GetMapping("/users/{user_id}/walks")
+    public ResponseEntity getUserWalks( @PathVariable("user_id") long user_id, @RequestParam(value = "starts_with", required = false) String startsWith) {
         if (startsWith == null) {
-            return new ResponseEntity(userDAO.listUserWalks(userid), HttpStatus.OK);
+            return new ResponseEntity(userDAO.listUserWalks(user_id), HttpStatus.OK);
         } else {
-            return new ResponseEntity(userDAO.listUserWalks(userid, startsWith), HttpStatus.OK);
+            return new ResponseEntity(userDAO.listUserWalks(user_id, startsWith), HttpStatus.OK);
         }
     }
 

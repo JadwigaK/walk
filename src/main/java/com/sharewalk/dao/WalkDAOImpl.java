@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -25,22 +26,29 @@ public class WalkDAOImpl implements WalkDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Walk> listWalks() {
-        TypedQuery<Walk> query =
-                entityManager.createNamedQuery("Walk.findAll", Walk.class);
+        Query query =
+                entityManager.createNamedQuery("Walk.findAll");
         return query.getResultList();
     }
 
     @Override
     public List<Walk> listWalks(String startsWith) {
-        TypedQuery<Walk> query =
-                entityManager.createNamedQuery("Walk.findAllStartsWith", Walk.class).setParameter("startsWith",startsWith+"%");
+        Query query =
+                entityManager.createNamedQuery("Walk.findAllStartsWith").setParameter("startsWith",startsWith+"%");
         return query.getResultList();
     }
 
     @Override
     public List<Walk> getWalk(long id) {
-        TypedQuery<Walk> query =
-                entityManager.createNamedQuery("Walk.findByID", Walk.class).setParameter("id",id);
+        Query query =
+                entityManager.createNamedQuery("Walk.findByID").setParameter("id",id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<User> getUserByID(long id) {
+        Query query =
+                entityManager.createNamedQuery("User.findUserByID").setParameter("id",id);
         return query.getResultList();
     }
 
@@ -62,6 +70,7 @@ public class WalkDAOImpl implements WalkDAO {
     @Override
     @Transactional
     public void addNewWalk(Walk walk) {
-        entityManager.persist(walk);
+        //mialam tu persist() ale nie dodawało mi nowych walków dla danego usera
+        entityManager.merge(walk);
     }
 }

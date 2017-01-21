@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "public.comment")
-@NamedQueries({
-        @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c")
-        //@NamedQuery(name = "Comment.findByIDComments", query = "SELECT c FROM Comment c where c.walk_id= :walkid")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Comment.findAll", query = "SELECT * FROM comment c", resultClass = Comment.class),
+        @NamedNativeQuery(name = "Comment.findByIDComments", query = "SELECT * FROM comment c where c.walk_id= :walkid", resultClass = Comment.class)
 })
 
 public class Comment {
@@ -22,7 +22,6 @@ public class Comment {
     private String comment;
 
     @ManyToOne
-    //@JoinColumn(name = "walk_id")
     private Walk walk;
 
     @ManyToOne
@@ -33,8 +32,6 @@ public class Comment {
         this.comment = comment;
     }
 
-//    public Comment(){
-//    }
 
     public long getId() {
         return id;

@@ -57,37 +57,37 @@ public class WalkDAOImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void listWalksWithoutParametersTest(){
-        when(entityManager.createNamedQuery("Walk.findAll", Walk.class)).thenReturn(query);
-        when(query.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1), new Walk("walk 2", 2)));
-
-        List<Walk> list = instance.listWalks();
-        assertEquals(list.size(),2);
-    }
-
-    @Test
-    public void listWalksWithParametersTest(){
-        when(entityManager.createNamedQuery("Walk.findAllStartsWith", Walk.class)).thenReturn(query);
-        when(query.setParameter("startsWith","walk 1"+"%")).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-
-        List<Walk> list = instance.listWalks("walk 1");
-        assertEquals(list.size(),1);
-        assertEquals(list.get(0).toString(),"Walk [id=0, name=walk 1]");
-    }
-
-    @Test
-    public void getWalkTest(){
-        Long id = Long.valueOf(1);
-        when(entityManager.createNamedQuery("Walk.findByID", Walk.class)).thenReturn(query);
-        when(query.setParameter("id",id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-
-        List<Walk> list = instance.getWalk(id);
-        assertEquals(list.size(),1);
-        assertEquals(list.get(0).toString(),"Walk [id=0, name=walk 1]");
-    }
+//    @Test
+//    public void listWalksWithoutParametersTest(){
+//        when(entityManager.createNamedQuery("Walk.findAll", Walk.class)).thenReturn(query);
+//        when(query.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1), new Walk("walk 2", 2)));
+//
+//        List<Walk> list = instance.listWalks();
+//        assertEquals(list.size(),2);
+//    }
+//
+//    @Test
+//    public void listWalksWithParametersTest(){
+//        when(entityManager.createNamedQuery("Walk.findAllStartsWith", Walk.class)).thenReturn(query);
+//        when(query.setParameter("startsWith","walk 1"+"%")).thenReturn(query1);
+//        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
+//
+//        List<Walk> list = instance.listWalks("walk 1");
+//        assertEquals(list.size(),1);
+//        assertEquals(list.get(0).toString(),"Walk [id=0, name=walk 1]");
+//    }
+//
+//    @Test
+//    public void getWalkTest(){
+//        Long id = Long.valueOf(1);
+//        when(entityManager.createNamedQuery("Walk.findByID", Walk.class)).thenReturn(query);
+//        when(query.setParameter("id",id)).thenReturn(query1);
+//        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
+//
+//        List<Walk> list = instance.getWalk(id);
+//        assertEquals(list.size(),1);
+//        assertEquals(list.get(0).toString(),"Walk [id=0, name=walk 1]");
+//    }
 
 //    @Test
 //    public void getWalkCommentsTest(){

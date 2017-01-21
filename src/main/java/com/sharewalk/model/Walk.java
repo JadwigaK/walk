@@ -1,43 +1,44 @@
 package com.sharewalk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "public.walk")
-@NamedQueries({
-        @NamedQuery(name = "Walk.findAll", query = "SELECT w FROM Walk w"),
-        @NamedQuery(name = "Walk.findByID", query = "SELECT w FROM Walk w where w.id= :id"),
-        @NamedQuery(name = "Walk.findAllStartsWith", query = "SELECT w FROM Walk w where w.name like :startsWith"),
-        @NamedQuery(name = "Walk.findAllForUser", query = "SELECT w FROM Walk w where w.userid= :userid"),
-        @NamedQuery(name = "Walk.findAllForUserStartsWith", query = "SELECT w FROM Walk w where w.userid= :userid and w.name like :startsWith")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Walk.findAll", query = "SELECT * FROM walk w", resultClass = Walk.class),
+        @NamedNativeQuery(name = "Walk.findByID", query = "SELECT * FROM walk w where w.id = :id", resultClass = Walk.class),
+        @NamedNativeQuery(name = "Walk.findAllStartsWith", query = "SELECT * FROM walk w where w.name like :startsWith", resultClass = Walk.class),
+        @NamedNativeQuery(name = "Walk.findAllForUser", query = "SELECT * FROM walk w where w.user_id = :userid", resultClass = Walk.class),
+        @NamedNativeQuery(name = "Walk.findAllForUserStartsWith", query = "SELECT * from walk w where w.user_id = :userid and w.name like :startsWith", resultClass = Walk.class)
 })
 public class Walk {
 
-        @Id
-        @Column(name = "id")
-        @GeneratedValue
-        private long id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private long id;
 
-        @Column(name = "name")
-        private String name;
+    @Column(name = "name")
+    private String name;
 
-        @JoinColumn(name = "userid", referencedColumnName = "public.user.id")
-        private long userid;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private User user;
 
-        @JsonProperty("waypoint")
-        //no generalnie z tym transient jest problem bo jak to dam to nie uzupełnia tablekli Waypoint jak dodaje nowy Walk a jak chce wyswietlac wszystkie Walki to nie chce zeby wyswietlac to
-        @Transient
-        @OneToMany(cascade=CascadeType.ALL)
-        @JoinColumn(name="walk_id")
-        private List<WayPoint> wayPointList;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name="walk_id")
+    private List<WayPoint> wayPointList;
 
 
-    public Walk(String name, long user_id) {
+    public Walk(long id, String name, User user, List<WayPoint> wayPointList ) {
+        this.id=id;
         this.name = name;
-        this.userid = user_id;
+        this.user=user;
+        this.wayPointList=wayPointList;
     }
 
     public Walk() {
@@ -59,12 +60,20 @@ public class Walk {
             this.name = name;
         }
 
-    public long getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public long getUser_id() {
+        return user.getId();
+    }
+
+    public void setUser_id(long user_id) {
+        this.user.setId(user_id);
     }
 
     public List<WayPoint> getWayPointList() {

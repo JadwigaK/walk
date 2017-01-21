@@ -11,6 +11,7 @@ public interface WalkDAO {
     List<Walk> listWalks();
     List<Walk> listWalks(String startsWith);
     List<Walk> getWalk(long id);
+    List<User> getUserByID(long id);
     //List<Comment> getWalkComments(long id);
     void updateWalk(Walk walk);
 

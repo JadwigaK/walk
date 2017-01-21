@@ -10,9 +10,6 @@ public class WayPoint {
     @GeneratedValue
     private long id;
 
-    @ManyToOne
-    private Walk walk;
-
     @Column(name = "pointname")
     private String pointname;
 
@@ -29,46 +26,37 @@ public class WayPoint {
         return id;
     }
 
+
     public String getPointname() {
         return pointname;
     }
 
-    public Walk getWalk() {
-        return walk;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
+    public void setPointname(String pointname) {
+        this.pointname = pointname;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-
-
-    public void setPointname(String pointname) {
-        this.pointname = pointname;
-    }
-
-    public void setWalk(Walk walk) {
-        this.walk = walk;
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
     }
 
     public void setLatitude(String latitude) {
