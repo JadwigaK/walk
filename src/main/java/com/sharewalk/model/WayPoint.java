@@ -26,6 +26,9 @@ public class WayPoint {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getPointname() {
         return pointname;
@@ -33,10 +36,6 @@ public class WayPoint {
 
     public void setPointname(String pointname) {
         this.pointname = pointname;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getDescription() {

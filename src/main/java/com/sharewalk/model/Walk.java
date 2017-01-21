@@ -34,7 +34,7 @@ public class Walk {
     private List<WayPoint> wayPointList;
 
 
-    public Walk(long id, String name, User user, List<WayPoint> wayPointList ) {
+    public Walk(String name, User user, List<WayPoint> wayPointList ) {
         this.id=id;
         this.name = name;
         this.user=user;

@@ -1,21 +1,13 @@
 package com.sharewalk.controller;
 
 import com.sharewalk.dao.UserDAO;
-import com.sharewalk.dao.WalkDAO;
-import com.sharewalk.model.Comment;
 import com.sharewalk.model.User;
-import com.sharewalk.model.Walk;
 import com.sharewalk.service.UserService;
-import com.sharewalk.service.WalkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Random;
 
 @Controller
 public class UserController {
