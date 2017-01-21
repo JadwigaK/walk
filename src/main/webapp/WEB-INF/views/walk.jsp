@@ -64,7 +64,7 @@
             <tr>
                 <td>${walk.id}</td>
                 <td>${walk.name}</td>
-                <td>${walk.userid}</td>
+                <td>${walk.user_id}</td>
             </tr>
         </c:forEach>
     </table>

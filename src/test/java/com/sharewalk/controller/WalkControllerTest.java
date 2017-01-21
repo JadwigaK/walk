@@ -47,32 +47,32 @@ public class WalkControllerTest {
     @Rule
     public ExpectedException ex = ExpectedException.none();
 
-    @Test
-    public void getAllWalksGeneralTest(){
-        when(walkDAO.listWalks()).thenReturn(Arrays.asList(new Walk("walk 1", 1), new Walk("walk 2", 2) ));
-        ResponseEntity responseEntity = instance.getAllWalks(null);
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        assertEquals(((List)responseEntity.getBody()).size(),2);
-    }
-
-    @Test
-    public void getAllWalksStartsWithTest(){
-        when(walkDAO.listWalks("walk 1")).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-        ResponseEntity responseEntity = instance.getAllWalks("walk 1");
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        assertEquals(((List)responseEntity.getBody()).size(),1);
-        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
-    }
-
-    @Test
-    public void getWalkByIDTest(){
-        Long id= Long.valueOf(1);
-        when(walkDAO.getWalk(id)).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-        ResponseEntity responseEntity = instance.getWalk(id);
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        assertEquals(((List)responseEntity.getBody()).size(),1);
-        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
-    }
+//    @Test
+//    public void getAllWalksGeneralTest(){
+//        when(walkDAO.listWalks()).thenReturn(Arrays.asList(new Walk("walk 1", 1), new Walk("walk 2", 2) ));
+//        ResponseEntity responseEntity = instance.getAllWalks(null);
+//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//        assertEquals(((List)responseEntity.getBody()).size(),2);
+//    }
+//
+//    @Test
+//    public void getAllWalksStartsWithTest(){
+//        when(walkDAO.listWalks("walk 1")).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
+//        ResponseEntity responseEntity = instance.getAllWalks("walk 1");
+//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//        assertEquals(((List)responseEntity.getBody()).size(),1);
+//        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
+//    }
+//
+//    @Test
+//    public void getWalkByIDTest(){
+//        Long id= Long.valueOf(1);
+//        when(walkDAO.getWalk(id)).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
+//        ResponseEntity responseEntity = instance.getWalk(id);
+//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//        assertEquals(((List)responseEntity.getBody()).size(),1);
+//        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
+//    }
 
 //    @Test
 //    public void listCommentsTest(){

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -18,15 +19,15 @@ public class UserDAOImpl implements UserDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Walk> listUserWalks(long user_id) {
-        TypedQuery<Walk> query =
-                entityManager.createNamedQuery("Walk.findAllForUser", Walk.class).setParameter("userid", user_id);
+        Query query =
+                entityManager.createNamedQuery("Walk.findAllForUser").setParameter("userid", user_id);
         return query.getResultList();
     }
 
     @Override
     public List<Walk> listUserWalks(long user_id, String startsWith) {
-        TypedQuery<Walk> query =
-                entityManager.createNamedQuery("Walk.findAllForUserStartsWith", Walk.class).setParameter("startsWith",startsWith+"%").setParameter("userid", user_id);
+        Query query =
+                entityManager.createNamedQuery("Walk.findAllForUserStartsWith").setParameter("startsWith",startsWith+"%").setParameter("userid", user_id);
         return query.getResultList();
     }
 

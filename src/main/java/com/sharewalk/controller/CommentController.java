@@ -27,7 +27,7 @@ public class CommentController {
     }
     // jeszcze nie dziala tu jeszcze nie ma tetsu
     @PostMapping("/users/{user_id}/walks/{walk_id}/comment")
-    public ResponseEntity<Walk> addComment(@PathVariable("user_id") long user_id, @PathVariable("walk_id") long walk_id, @RequestBody Comment comment){
+    public ResponseEntity<Comment> addComment(@PathVariable("user_id") long user_id, @PathVariable("walk_id") long walk_id, @RequestBody Comment comment){
         comment.setUserId(user_id);
         comment.setWalkId(walk_id);
         commentDAO.addNewComment(comment);

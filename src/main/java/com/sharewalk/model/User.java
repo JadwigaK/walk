@@ -7,8 +7,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "public.user")
-@NamedQueries({
-    @NamedQuery(name="User.findAll", query="SELECT c FROM User c")
+@NamedNativeQueries({
+        @NamedNativeQuery(name="User.findAll", query="SELECT * FROM public.user u", resultClass = User.class),
+        @NamedNativeQuery(name="User.findUserByID", query="SELECT * FROM public.user u where u.id = :id", resultClass = User.class)
 })
 public class User {
     @Id
@@ -21,6 +22,7 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
 
     public long getId() {
         return id;
