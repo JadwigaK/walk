@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @Controller
 public class UserController {
     private final UserService userService;
@@ -21,23 +23,23 @@ public class UserController {
         this.userDAO = userDAO;
     }
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/users/{user_id}/walks")
-    public ResponseEntity getUserWalks( @PathVariable("user_id") long user_id, @RequestParam(value = "starts_with", required = false) String startsWith) {
-        if (startsWith == null) {
-            return new ResponseEntity(userDAO.listUserWalks(user_id), HttpStatus.OK);
+    public ResponseEntity getUserWalks( @PathVariable("user_id") Long userId, @RequestParam(value = "starts_with", required = false) String startsWith) {
+        if (userDAO.listUserWalks(userId).equals(Collections.emptyList())){
+            return new ResponseEntity("No User found for User ID: " + userId, HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity(userDAO.listUserWalks(user_id, startsWith), HttpStatus.OK);
+            if (startsWith == null) {
+                return new ResponseEntity(userDAO.listUserWalks(userId), HttpStatus.OK);
+            } else {
+                return new ResponseEntity(userDAO.listUserWalks(userId, startsWith), HttpStatus.OK);
+            }
         }
     }
 
     @PostMapping("/users")
     public ResponseEntity<User> addNewUser(@RequestBody User user){
         userDAO.addUser(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(user, HttpStatus.OK);
 
     }
 

@@ -32,27 +32,25 @@ public class WalkDAOImpl implements WalkDAO {
     }
 
     @Override
-    public List<Walk> getWalk(long id) {
+    public List<Walk> getWalk(Long id) {
         Query query =
                 entityManager.createNamedQuery("Walk.findByID").setParameter("id",id);
         return query.getResultList();
     }
 
     @Override
-    public List<User> getUserByID(long id) {
+    public List<User> getUserByID(Long id) {
         Query query =
                 entityManager.createNamedQuery("User.findUserByID").setParameter("id",id);
         return query.getResultList();
     }
 
-    //jeszcze nie testuje
     @Override
     @Transactional
     public void updateWalk(Walk walk) {
         entityManager.merge(walk);
     }
 
-    //add jeszcze nie testuje
     @Override
     @Transactional
     public void addNewWalk(Walk walk) {

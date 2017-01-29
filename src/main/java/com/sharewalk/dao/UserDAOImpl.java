@@ -17,16 +17,16 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Walk> listUserWalks(long user_id) {
+    public List<Walk> listUserWalks(Long userId) {
         Query query =
-                entityManager.createNamedQuery("Walk.findAllForUser").setParameter("userid", user_id);
+                entityManager.createNamedQuery("Walk.findAllForUser").setParameter("userid", userId);
         return query.getResultList();
     }
 
     @Override
-    public List<Walk> listUserWalks(long user_id, String startsWith) {
+    public List<Walk> listUserWalks(Long userId, String startsWith) {
         Query query =
-                entityManager.createNamedQuery("Walk.findAllForUserStartsWith").setParameter("startsWith",startsWith+"%").setParameter("userid", user_id);
+                entityManager.createNamedQuery("Walk.findAllForUserStartsWith").setParameter("startsWith",startsWith+"%").setParameter("userid", userId);
         return query.getResultList();
     }
 

@@ -35,7 +35,6 @@ public class Walk {
 
 
     public Walk(String name, User user, List<WayPoint> wayPointList ) {
-        this.id=id;
         this.name = name;
         this.user=user;
         this.wayPointList=wayPointList;
@@ -66,14 +65,6 @@ public class Walk {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public long getUser_id() {
-        return user.getId();
-    }
-
-    public void setUser_id(long user_id) {
-        this.user.setId(user_id);
     }
 
     public List<WayPoint> getWayPointList() {

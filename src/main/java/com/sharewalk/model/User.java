@@ -20,6 +20,13 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    public User() {
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public long getId() {
         return id;
@@ -47,6 +54,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Walk [id=" + id + ", name=" + email +"]";
+        return "User [id=" + id + ", name=" + email +"]";
     }
 }
