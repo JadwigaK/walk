@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoRule;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,6 +46,12 @@ public class WalkDAOImplTest {
         when(entityManager.createNamedQuery("Walk.findAll")).thenReturn(query);
         when(query.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null), new Walk("walk 2", null, null)));
 
+        List walks =  new ArrayList<>();
+        when(query.getResultList()).thenReturn(walks);
+
+        List result = instance.listWalks();
+        assertEquals(walks, result);
+
         List<Walk> list = instance.listWalks();
         assertEquals(2, list.size());
         assertEquals(Walk.class, list.get(0).getClass());
@@ -70,27 +77,12 @@ public class WalkDAOImplTest {
         when(query.setParameter("id",id)).thenReturn(query1);
         when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null)));
 
-        List<Walk> list = instance.getWalk(id);
-        assertEquals(1, list.size());
-        Walk actualWalk = (Walk)list.get(0);
+        Walk actualWalk = instance.getWalk(id);
+
         assertEquals(0, actualWalk.getId());
         assertEquals("walk 1", actualWalk.getName());
     }
 
-    @Test
-    public void getUserByIDTest(){
-        Long id = Long.valueOf(1L);
-        when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
-        when(query.setParameter("id",id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new User("user1@", "pass1")));
-
-        List<User> list = instance.getUserByID(id);
-        assertEquals(1, list.size());
-        User actualUser = (User)list.get(0);
-        assertEquals(0, actualUser.getId());
-        assertEquals("user1@", actualUser.getEmail());
-        assertEquals("pass1", actualUser.getPassword());
-    }
 
     @Test
     public void addNewWalkTest(){

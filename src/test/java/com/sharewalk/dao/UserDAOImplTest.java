@@ -70,4 +70,17 @@ public class UserDAOImplTest {
         verify(entityManager).persist(user);
 
     }
+
+    @Test
+    public void getUserByIDTest(){
+        Long id = Long.valueOf(1L);
+        when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
+        when(query.setParameter("id",id)).thenReturn(query1);
+        when(query1.getResultList()).thenReturn(Arrays.asList(new User("user1@", "pass1")));
+
+        User actualUser = instance.getUserById(id);
+        assertEquals(0, actualUser.getId());
+        assertEquals("user1@", actualUser.getEmail());
+        assertEquals("pass1", actualUser.getPassword());
+    }
 }

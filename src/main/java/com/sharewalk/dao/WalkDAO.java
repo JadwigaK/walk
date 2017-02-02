@@ -9,8 +9,7 @@ public interface WalkDAO {
     void addNewWalk(Walk walk);
     List<Walk> listWalks();
     List<Walk> listWalks(String startsWith);
-    List<Walk> getWalk(Long id);
-    List<User> getUserByID(Long id);
+    Walk getWalk(Long id);
     void updateWalk(Walk walk);
 
 }

@@ -28,7 +28,6 @@ public class Walk {
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private User user;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name="walk_id")
     private List<WayPoint> wayPointList;
