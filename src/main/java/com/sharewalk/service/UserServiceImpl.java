@@ -1,7 +1,6 @@
 package com.sharewalk.service;
 
 import com.sharewalk.dao.UserDAO;
-import com.sharewalk.dao.WalkDAO;
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<Walk> listUserWalks(long user_id) {
-        return this.userDAO.listUserWalks(user_id);
+    public List<Walk> listUserWalks(long userId) {
+        return this.userDAO.listUserWalks(userId);
     }
 
     @Override
     @Transactional
-    public List<Walk> listUserWalks(long user_id, String nameStartsWith) {
-        return this.userDAO.listUserWalks(user_id, nameStartsWith);
+    public List<Walk> listUserWalks(long userId, String nameStartsWith) {
+        return this.userDAO.listUserWalks(userId, nameStartsWith);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return this.userDAO.getUserById(id);
     }
 
     @Override

@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserService {
     List<Walk> listUserWalks(long userid);
     List<Walk> listUserWalks(long userid, String nameStartsWith);
+    User getUserById(Long id);
     void addUser(User user);
 }

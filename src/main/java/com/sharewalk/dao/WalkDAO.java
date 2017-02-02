@@ -1,6 +1,5 @@
 package com.sharewalk.dao;
 
-import com.sharewalk.model.Comment;
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
 
@@ -10,9 +9,7 @@ public interface WalkDAO {
     void addNewWalk(Walk walk);
     List<Walk> listWalks();
     List<Walk> listWalks(String startsWith);
-    List<Walk> getWalk(long id);
-    List<User> getUserByID(long id);
-    //List<Comment> getWalkComments(long id);
+    Walk getWalk(Long id);
     void updateWalk(Walk walk);
 
 }
