@@ -1,8 +1,11 @@
 package com.sharewalk.controller;
 
+import com.sharewalk.dao.UserDAO;
 import com.sharewalk.dao.WalkDAO;
-import com.sharewalk.model.Comment;
+import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
+import com.sharewalk.model.WayPoint;
+import com.sharewalk.service.UserService;
 import com.sharewalk.service.WalkService;
 import junitparams.JUnitParamsRunner;
 import org.junit.Before;
@@ -13,73 +16,154 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
+import org.mockito.internal.util.reflection.Whitebox;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 
-import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.*;
 
-@RunWith(JUnitParamsRunner.class)
+//@RunWith(JUnitParamsRunner.class)
 public class WalkControllerTest {
+    @Rule
+    public MockitoRule mockito = MockitoJUnit.rule();
+
+    @Rule
+    public ExpectedException ex = ExpectedException.none();
 
     @InjectMocks
     private WalkController instance;
 
     @Mock
-    private WalkDAO walkDAO;
-
-    @Mock
     private WalkService walkService;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    @Mock
+    private UserService userService;
+
+    @Test
+    public void getAllWalksGeneralTest(){
+        //given
+        List walks = new ArrayList<>();
+        when(walkService.listWalks()).thenReturn(walks);
+        //when
+        ResponseEntity responseEntity = instance.getAllWalks(null);
+        //then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(walks, (List)responseEntity.getBody());
     }
 
-    @Rule
-    public ExpectedException ex = ExpectedException.none();
 
-//    @Test
-//    public void getAllWalksGeneralTest(){
-//        when(walkDAO.listWalks()).thenReturn(Arrays.asList(new Walk("walk 1", 1), new Walk("walk 2", 2) ));
-//        ResponseEntity responseEntity = instance.getAllWalks(null);
-//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-//        assertEquals(((List)responseEntity.getBody()).size(),2);
-//    }
-//
-//    @Test
-//    public void getAllWalksStartsWithTest(){
-//        when(walkDAO.listWalks("walk 1")).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-//        ResponseEntity responseEntity = instance.getAllWalks("walk 1");
-//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-//        assertEquals(((List)responseEntity.getBody()).size(),1);
-//        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
-//    }
-//
-//    @Test
-//    public void getWalkByIDTest(){
-//        Long id= Long.valueOf(1);
-//        when(walkDAO.getWalk(id)).thenReturn(Arrays.asList(new Walk("walk 1", 1)));
-//        ResponseEntity responseEntity = instance.getWalk(id);
-//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-//        assertEquals(((List)responseEntity.getBody()).size(),1);
-//        assertEquals(((List)responseEntity.getBody()).get(0).toString(),"Walk [id=0, name=walk 1]");
-//    }
+    @Test
+    public void getAllWalksStartsWithTestOK(){
+        //given
+        List walks = new ArrayList<>();
+        when(walkService.listWalks("walk 1")).thenReturn(walks);
+        //when
+        ResponseEntity responseEntity = instance.getAllWalks("walk 1");
+        //then
+        verify(walkService).listWalks("walk 1");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(walks,(List)responseEntity.getBody());
+    }
 
-//    @Test
-//    public void listCommentsTest(){
-//        Long id= Long.valueOf(1);
-//        when(walkDAO.getWalkComments(id)).thenReturn(Arrays.asList(new Comment("comment 1", 1, 1), new Comment("comment 2", 1, 2)));
-//        ResponseEntity responseEntity = instance.listComments(id);
-//        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-//        assertEquals(((List)responseEntity.getBody()).size(),2);
-//    }
+    @Test
+    public void getWalkByIDTestOK(){
+        //given
+        Long id= Long.valueOf(1L);
+        Walk walk = new Walk();
+        when(walkService.getWalk(id)).thenReturn(walk);
+        //when
+        ResponseEntity responseEntity = instance.getWalk(id);
+        //then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(walk, (Walk)responseEntity.getBody());
+    }
+
+    @Test
+    public void getWalkByIDTestNotFound(){
+        //given
+        Long id= Long.valueOf(2L);
+        when(walkService.getWalk(id)).thenReturn(null);
+        //when
+        ResponseEntity responseEntity = instance.getWalk(id);
+        //then
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void addNewWalkOK(){
+        //given
+        Long id= Long.valueOf(1L);
+        Walk walk = new Walk();
+        User mockUser = mock(User.class);
+        when(userService.getUserById(id)).thenReturn(mockUser);
+        Whitebox.setInternalState(walk, "user", mockUser);
+        //when
+        ResponseEntity responseEntity = instance.addNewWalk(id, walk);
+        //then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(walk, (Walk)(responseEntity.getBody()));
+    }
+
+    @Test
+    public void addNewWalkUserNotFound(){
+        //given
+        Long id= Long.valueOf(2L);
+        when(userService.getUserById(id)).thenReturn(null);
+        //when
+        ResponseEntity responseEntity = instance.addNewWalk(id, null);
+        //then
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void updateWalkOK(){
+        //given
+        Long userId= Long.valueOf(1L);
+        Long walkId= Long.valueOf(1L);
+        Walk walk = new Walk();
+        User mockUser = mock(User.class);
+        Walk mockWalk = mock(Walk.class);
+        when(userService.getUserById(userId)).thenReturn(mockUser);
+        when(walkService.getWalk(walkId)).thenReturn(mockWalk);
+        //when
+        ResponseEntity responseEntity = instance.updateWalk(userId, walkId, walk);
+        //then
+        verify(walkService).updateWalk(walk, userId, walkId);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(walk, (Walk)(responseEntity.getBody()));
+    }
+
+    @Test
+    public void updateWalkUserNotFound(){
+        //given
+        Long userId= Long.valueOf(2L);
+        Long walkId= Long.valueOf(0L);
+        when(userService.getUserById(userId)).thenReturn(null);
+        //when
+        ResponseEntity responseEntity = instance.updateWalk(userId, walkId, null);
+        //then
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void updateWalkWalkNotFound(){
+        //given
+        Long walkId= Long.valueOf(2L);
+        Long userId= Long.valueOf(0L);
+        when(walkService.getWalk(walkId)).thenReturn(null);
+        //when
+        ResponseEntity responseEntity = instance.updateWalk(userId, walkId, null);
+        //then
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
+
 }
