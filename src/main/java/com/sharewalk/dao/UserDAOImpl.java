@@ -30,6 +30,14 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
+
+    @Override
+    public User getUserById(Long id) {
+        Query query =
+                entityManager.createNamedQuery("User.findUserByID").setParameter("id",id);
+        return (User) query.getResultList().get(0);
+    }
+
     @Override
     @Transactional
     public void addUser(User user) {

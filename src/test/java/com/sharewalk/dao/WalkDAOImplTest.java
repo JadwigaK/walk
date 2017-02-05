@@ -2,14 +2,11 @@ package com.sharewalk.dao;
 
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
-import junitparams.JUnitParamsRunner;
-import org.junit.Before;
+import com.sharewalk.model.WayPoint;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -42,67 +39,65 @@ public class WalkDAOImplTest {
 
     @Test
     public void listWalksWithoutParametersTest(){
+        //Given
+        Walk walk1 = new Walk("walk 1", new User("j","p"), Arrays.asList(new WayPoint()));
+        Walk walk2 = new Walk("walk 2", new User("k", "r"), Arrays.asList(new WayPoint()));
         when(entityManager.createNamedQuery("Walk.findAll")).thenReturn(query);
-        when(query.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null), new Walk("walk 2", null, null)));
-
+        when(query.getResultList()).thenReturn(Arrays.asList(walk1, walk2));
+        //When
         List<Walk> list = instance.listWalks();
+        //Then
         assertEquals(2, list.size());
-        assertEquals(Walk.class, list.get(0).getClass());
+        assertEquals(walk1, list.get(0));
+        assertEquals(walk2, list.get(1));
     }
 
     @Test
     public void listWalksWithParametersTest(){
+        //Given
+        Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         when(entityManager.createNamedQuery("Walk.findAllStartsWith")).thenReturn(query);
         when(query.setParameter("startsWith","walk 1"+"%")).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null)));
-
+        when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
+        //When
         List<Walk> list = instance.listWalks("walk 1");
+        //Then
         assertEquals(1, list.size());
-        Walk actualWalk = (Walk)list.get(0);
-        assertEquals(0, actualWalk.getId());
-        assertEquals("walk 1", actualWalk.getName());
+        assertEquals(walk1,list.get(0));
     }
 
     @Test
     public void getWalkTest(){
+        //Given
+        Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         Long id = Long.valueOf(1L);
         when(entityManager.createNamedQuery("Walk.findByID")).thenReturn(query);
         when(query.setParameter("id",id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null)));
-
-        List<Walk> list = instance.getWalk(id);
-        assertEquals(1, list.size());
-        Walk actualWalk = (Walk)list.get(0);
-        assertEquals(0, actualWalk.getId());
-        assertEquals("walk 1", actualWalk.getName());
+        when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
+        //When
+        Walk actualWalk = instance.getWalk(id);
+        //Then
+        assertEquals(walk1, actualWalk);
     }
 
-    @Test
-    public void getUserByIDTest(){
-        Long id = Long.valueOf(1L);
-        when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
-        when(query.setParameter("id",id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new User("user1@", "pass1")));
-
-        List<User> list = instance.getUserByID(id);
-        assertEquals(1, list.size());
-        User actualUser = (User)list.get(0);
-        assertEquals(0, actualUser.getId());
-        assertEquals("user1@", actualUser.getEmail());
-        assertEquals("pass1", actualUser.getPassword());
-    }
 
     @Test
     public void addNewWalkTest(){
+        //Given
         Walk walk = new Walk();
+        //When
         instance.addNewWalk(walk);
+        //Then
         verify(entityManager).merge(walk);
     }
 
     @Test
     public void updateWalkTest(){
+        //Given
         Walk walk = new Walk();
+        //When
         instance.addNewWalk(walk);
+        //Then
         verify(entityManager).merge(walk);
     }
 
