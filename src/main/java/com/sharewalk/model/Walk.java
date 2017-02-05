@@ -78,5 +78,18 @@ public class Walk {
         public String toString() {
             return "Walk [id=" + id + ", name=" + name +"]";
         }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Walk)) return false;
+
+        Walk walk = (Walk) o;
+
+        if (id != walk.id) return false;
+        if (name != null ? !name.equals(walk.name) : walk.name != null) return false;
+        if (user != null ? !user.equals(walk.user) : walk.user != null) return false;
+        return wayPointList != null ? wayPointList.equals(walk.wayPointList) : walk.wayPointList == null;
+    }
 }
 
