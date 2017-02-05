@@ -38,10 +38,10 @@ public class WalkController {
     @GetMapping("/walks/{walk_id}")
     public ResponseEntity getWalk(@PathVariable("walk_id") Long walkId) {
         Walk walk = walkService.getWalk(walkId);
-        if (walk==null) {
+        if (walk == null) {
             return new ResponseEntity("No Walk found for Walk ID " + walkId, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(walk, HttpStatus.OK);
+        return new ResponseEntity(walkService.getWalk(walkId), HttpStatus.OK);
     }
 
     @PostMapping("/users/{user_id}/walks")
@@ -58,7 +58,7 @@ public class WalkController {
     public ResponseEntity<Walk> updateWalk(@PathVariable("user_id") Long userId, @PathVariable("walk_id") Long walkId, @RequestBody Walk walk){
         if (userService.getUserById(userId)==null) {
             return new ResponseEntity("No User found for User ID: " + userId, HttpStatus.NOT_FOUND);
-        }else if (walkService.getWalk(walkId).equals(Collections.emptyList())) {
+        }else if (walkService.getWalk(walkId)==null) {
             return new ResponseEntity("No Walk found for Walk ID: " + walkId, HttpStatus.NOT_FOUND);
         } else {
             walkService.updateWalk(walk, userId, walkId);

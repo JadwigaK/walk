@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/users/{user_id}/walks")
     public ResponseEntity getUserWalks( @PathVariable("user_id") Long userId, @RequestParam(value = "starts_with", required = false) String startsWith) {
-        if (userService.listUserWalks(userId).isEmpty()){
+        if (userService.getUserById(userId)==null) {
             return new ResponseEntity("No User found for User ID: " + userId, HttpStatus.NOT_FOUND);
         } else {
             if (startsWith == null) {
