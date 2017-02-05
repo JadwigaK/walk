@@ -2,14 +2,12 @@ package com.sharewalk.service;
 
 import com.sharewalk.dao.UserDAO;
 import com.sharewalk.dao.WalkDAO;
-import com.sharewalk.dao.WalkDAOImpl;
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -47,6 +45,17 @@ public class WalkServiceImplTest {
     }
 
     @Test
+    public void listWalksWithParametersTest(){
+        //given
+        List walks = new ArrayList<>();
+        when(walkDAO.listWalks("walk 1")).thenReturn(walks);
+        //when
+        List<Walk> result = instance.listWalks("walk 1");
+        //then
+        assertEquals(walks, result);
+    }
+
+    @Test
     public void getWalkTest(){
         //given
         Long walkId = Long.valueOf(1L);
@@ -70,6 +79,21 @@ public class WalkServiceImplTest {
         instance.addNewWalk(walk, userId);
         //then
         verify(walkDAO).addNewWalk(walk);
+        assertEquals(mockUser, walk.getUser());
+    }
+
+    @Test
+    public void updateWalkTest(){
+        //given
+        Long userId = Long.valueOf(1L);
+        Long walkId = Long.valueOf(1L);
+        Walk walk = new Walk();
+        User mockUser = mock(User.class);
+        when(userDAO.getUserById(userId)).thenReturn(mockUser);
+        //when
+        instance.updateWalk(walk, userId, walkId);
+        //then
+        verify(walkDAO).updateWalk(walk);
         assertEquals(mockUser, walk.getUser());
     }
 

@@ -2,6 +2,7 @@ package com.sharewalk.dao;
 
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
+import com.sharewalk.model.WayPoint;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -39,48 +40,57 @@ public class UserDAOImplTest {
 
     @Test
     public void listUserWalksWithoutParametersTest(){
+        //Given
+        Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         Long userId = Long.valueOf(1L);
         when(entityManager.createNamedQuery("Walk.findAllForUser")).thenReturn(query);
         when(query.setParameter("userid",userId)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null)));
-
+        when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
+        //When
         List<Walk> list = instance.listUserWalks(userId);
+        //Then
         assertEquals(1, list.size());
-        assertEquals(Walk.class, list.get(0).getClass());
+        assertEquals(walk1, list.get(0));
     }
 
     @Test
     public void listUserWalksWithParametersTest(){
+        //Given
+        Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         Long userId = Long.valueOf(1L);
         String startsWith = "walk 1";
         when(entityManager.createNamedQuery("Walk.findAllForUserStartsWith")).thenReturn(query);
         when(query.setParameter("startsWith",startsWith+"%")).thenReturn(query1);
         when(query1.setParameter("userid",userId)).thenReturn(query2);
-        when(query2.getResultList()).thenReturn(Arrays.asList(new Walk("walk 1", null, null)));
-
+        when(query2.getResultList()).thenReturn(Arrays.asList(walk1));
+        //When
         List<Walk> list = instance.listUserWalks(userId, startsWith);
+        //Then
         assertEquals(1, list.size());
-        assertEquals(Walk.class, list.get(0).getClass());
+        assertEquals(walk1, list.get(0));
     }
 
     @Test
     public void addUserTest() {
+        //Given
         User user = new User();
+        //When
         instance.addUser(user);
+        //Then
         verify(entityManager).persist(user);
-
     }
 
     @Test
     public void getUserByIDTest(){
+        //Given
+        User user1 = new User("j", "p");
         Long id = Long.valueOf(1L);
         when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
         when(query.setParameter("id",id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(new User("user1@", "pass1")));
-
+        when(query1.getResultList()).thenReturn(Arrays.asList(user1));
+        //When
         User actualUser = instance.getUserById(id);
-        assertEquals(0, actualUser.getId());
-        assertEquals("user1@", actualUser.getEmail());
-        assertEquals("pass1", actualUser.getPassword());
+        //Then
+        assertEquals(user1, actualUser);
     }
 }

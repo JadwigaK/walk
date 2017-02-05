@@ -1,8 +1,6 @@
 package com.sharewalk.controller;
 
-import com.sharewalk.dao.UserDAO;
 import com.sharewalk.model.User;
-import com.sharewalk.model.Walk;
 import com.sharewalk.service.UserService;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

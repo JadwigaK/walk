@@ -20,13 +20,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<Walk> listUserWalks(long userId) {
+    public List<Walk> listUserWalks(Long userId) {
         return this.userDAO.listUserWalks(userId);
     }
 
     @Override
     @Transactional
-    public List<Walk> listUserWalks(long userId, String nameStartsWith) {
+    public List<Walk> listUserWalks(Long userId, String nameStartsWith) {
         return this.userDAO.listUserWalks(userId, nameStartsWith);
     }
 
