@@ -8,7 +8,7 @@ public interface WalkService {
 
     List<Walk> listWalks();
     List<Walk> listWalks(String startsWith);
-    List<Walk> getWalk(long id);
-    void addNewWalk(Walk walk);
-    void updateWalk(Walk walk);
+    Walk getWalk(Long id);
+    void addNewWalk(Walk walk, Long userId);
+    void updateWalk(Walk walk, Long userId, Long walkId);
 }

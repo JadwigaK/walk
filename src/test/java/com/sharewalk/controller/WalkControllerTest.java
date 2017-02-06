@@ -1,21 +1,15 @@
 package com.sharewalk.controller;
 
-import com.sharewalk.dao.UserDAO;
-import com.sharewalk.dao.WalkDAO;
+
 import com.sharewalk.model.User;
 import com.sharewalk.model.Walk;
-import com.sharewalk.model.WayPoint;
 import com.sharewalk.service.UserService;
 import com.sharewalk.service.WalkService;
-import junitparams.JUnitParamsRunner;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -23,15 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
-//@RunWith(JUnitParamsRunner.class)
 public class WalkControllerTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule();
