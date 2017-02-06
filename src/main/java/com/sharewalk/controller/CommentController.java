@@ -1,36 +1,41 @@
 package com.sharewalk.controller;
 
-import com.sharewalk.dao.CommentDAO;
 import com.sharewalk.model.Comment;
-import com.sharewalk.model.Walk;
 import com.sharewalk.service.CommentService;
+import com.sharewalk.service.WalkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CommentController {
 
     private final CommentService commentService;
 
-    private CommentDAO commentDAO;
+    private final WalkService walkService;
 
     @Autowired
-    public CommentController(CommentService commentService, CommentDAO commentDAO) {
+    public CommentController(CommentService commentService, WalkService walkService) {
         this.commentService = commentService;
-        this.commentDAO = commentDAO;
+        this.walkService = walkService;
     }
-    // jeszcze nie dziala tu jeszcze nie ma tetsu
+
     @PostMapping("/users/{user_id}/walks/{walk_id}/comment")
-    public ResponseEntity<Comment> addComment(@PathVariable("user_id") long user_id, @PathVariable("walk_id") long walk_id, @RequestBody Comment comment){
-        comment.setUserId(user_id);
-        comment.setWalkId(walk_id);
-        commentDAO.addNewComment(comment);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<Comment> addComment(@PathVariable("user_id") Long userId, @PathVariable("walk_id") Long walkId, @RequestBody Comment comment){
+        commentService.addNewComment(comment, userId, walkId);
+        return new ResponseEntity(comment, HttpStatus.OK);
+    }
+
+    @GetMapping("/walks/{walk_id}/comment")
+    public ResponseEntity<Comment> listComments(@PathVariable("walk_id") Long walkId) {
+        if (walkService.getWalk(walkId) == null) {
+            return new ResponseEntity("No Walk found for Walk ID: " + walkId, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity(commentService.listComments(walkId),HttpStatus.OK);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.sharewalk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -7,37 +8,40 @@ import javax.persistence.*;
 @Entity
 @Table(name = "public.comment")
 @NamedNativeQueries({
-        @NamedNativeQuery(name = "Comment.findAll", query = "SELECT * FROM comment c", resultClass = Comment.class),
-        @NamedNativeQuery(name = "Comment.findByIDComments", query = "SELECT * FROM comment c where c.walk_id= :walkid", resultClass = Comment.class)
+        @NamedNativeQuery(name = "Comment.findByWalkID", query = "SELECT * FROM comment c where c.walk_id= :walkid", resultClass = Comment.class)
 })
 
 public class Comment {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private long id;
+    private Long id;
 
-    //@JsonProperty("comment")
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Walk walk;
 
-    @ManyToOne
-    //@JoinColumn(name = "user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private User user;
 
-    public Comment(String comment) {
+    public Comment(String comment, Walk walk, User user) {
         this.comment = comment;
+        this.walk = walk;
+        this.user = user;
     }
 
+    public Comment() {
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,28 +57,33 @@ public class Comment {
         return walk;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setWalk(Walk walk) {
         this.walk = walk;
     }
 
-    public void setWalkId(long id) {
-        walk.setId(id);
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void setUserId(long id) {
-        user.setId(id);
-    }
-
     @Override
     public String toString() {
         return "Comment [id=" + id + ", comment=" + comment +"]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+
+        Comment comment1 = (Comment) o;
+
+        if (id != comment1.id) return false;
+        if (comment != null ? !comment.equals(comment1.comment) : comment1.comment != null) return false;
+        if (walk != null ? !walk.equals(comment1.walk) : comment1.walk != null) return false;
+        return user != null ? user.equals(comment1.user) : comment1.user == null;
     }
 }
