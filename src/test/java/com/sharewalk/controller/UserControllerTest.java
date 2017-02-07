@@ -1,6 +1,7 @@
 package com.sharewalk.controller;
 
 import com.sharewalk.model.User;
+import com.sharewalk.model.Walk;
 import com.sharewalk.service.UserService;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,40 +36,40 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void getUserWalksTest(){
+    public void getUserWalksTest() {
         //given
-        Long userId = Long.valueOf(1L);
-        User mockUser=mock(User.class);
-        List walks = new ArrayList<>();
+        Long userId = 1L;
+        User mockUser = mock(User.class);
+        List<Walk> walks = new ArrayList<Walk>();
         when(userService.getUserById(userId)).thenReturn(mockUser);
         when(userService.listUserWalks(userId)).thenReturn(walks);
         //when
         ResponseEntity responseEntity = instance.getUserWalks(userId, null);
         //then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walks, (List)responseEntity.getBody());
+        assertEquals(walks, (List) responseEntity.getBody());
 
     }
 
     @Test
-    public void getUserWalksStartsWithTest(){
+    public void getUserWalksStartsWithTest() {
         //given
-        Long userId = Long.valueOf(1L);
-        User mockUser=mock(User.class);
-        List walks = new ArrayList<>();
-        when(userService.listUserWalks(userId,"walk 1" )).thenReturn(walks);
+        Long userId = 1L;
+        User mockUser = mock(User.class);
+        List<Walk> walks = new ArrayList<Walk>();
+        when(userService.listUserWalks(userId, "walk 1")).thenReturn(walks);
         when(userService.getUserById(userId)).thenReturn(mockUser);
         //when
         ResponseEntity responseEntity = instance.getUserWalks(userId, "walk 1");
         //then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walks, (List)responseEntity.getBody());
+        assertEquals(walks, (List) responseEntity.getBody());
     }
 
     @Test
-    public void getUserWalksUserNotFound(){
+    public void getUserWalksUserNotFound() {
         //given
-        Long userId= Long.valueOf(2L);
+        Long userId = 2L;
         when(userService.listUserWalks(userId)).thenReturn(Collections.emptyList());
         //when
         ResponseEntity responseEntity = instance.getUserWalks(userId, null);
@@ -78,7 +79,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addNewUserTest(){
+    public void addNewUserTest() {
         //given
         User mockUser = mock(User.class);
         //when
@@ -87,8 +88,5 @@ public class UserControllerTest {
         verify(userService).addUser(mockUser);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-
-
-
 
 }

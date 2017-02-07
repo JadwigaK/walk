@@ -18,7 +18,7 @@ public class WalkServiceImpl implements WalkService {
     @Autowired
     public WalkServiceImpl(WalkDAO walkDAO, UserDAO userDAO) {
         this.walkDAO = walkDAO;
-        this.userDAO=userDAO;
+        this.userDAO = userDAO;
     }
 
     @Override

@@ -34,9 +34,9 @@ public class WalkServiceImplTest {
     private UserDAO userDAO;
 
     @Test
-    public void listWalksTest(){
+    public void listWalksTest() {
         //given
-        List walks = new ArrayList<>();
+        List<Walk> walks = new ArrayList<Walk>();
         when(walkDAO.listWalks()).thenReturn(walks);
         //when
         List<Walk> result = instance.listWalks();
@@ -45,9 +45,9 @@ public class WalkServiceImplTest {
     }
 
     @Test
-    public void listWalksWithParametersTest(){
+    public void listWalksWithParametersTest() {
         //given
-        List walks = new ArrayList<>();
+        List<Walk> walks = new ArrayList<Walk>();
         when(walkDAO.listWalks("walk 1")).thenReturn(walks);
         //when
         List<Walk> result = instance.listWalks("walk 1");
@@ -56,9 +56,9 @@ public class WalkServiceImplTest {
     }
 
     @Test
-    public void getWalkTest(){
+    public void getWalkTest() {
         //given
-        Long walkId = Long.valueOf(1L);
+        Long walkId = 1L;
         Walk walk = new Walk();
         when(walkDAO.getWalk(walkId)).thenReturn(walk);
         //when
@@ -69,9 +69,9 @@ public class WalkServiceImplTest {
     }
 
     @Test
-    public void addNewWalkTest(){
+    public void addNewWalkTest() {
         //given
-        Long userId = Long.valueOf(1L);
+        Long userId = 1L;
         Walk walk = new Walk();
         User mockUser = mock(User.class);
         when(userDAO.getUserById(userId)).thenReturn(mockUser);
@@ -83,10 +83,10 @@ public class WalkServiceImplTest {
     }
 
     @Test
-    public void updateWalkTest(){
+    public void updateWalkTest() {
         //given
-        Long userId = Long.valueOf(1L);
-        Long walkId = Long.valueOf(1L);
+        Long userId = 1L;
+        Long walkId = 1L;
         Walk walk = new Walk();
         User mockUser = mock(User.class);
         when(userDAO.getUserById(userId)).thenReturn(mockUser);
@@ -96,8 +96,6 @@ public class WalkServiceImplTest {
         verify(walkDAO).updateWalk(walk);
         assertEquals(mockUser, walk.getUser());
     }
-
-
 
 
 }
