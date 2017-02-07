@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Walk> listUserWalks(Long userId, String startsWith) {
         Query query =
-                entityManager.createNamedQuery("Walk.findAllForUserStartsWith").setParameter("startsWith",startsWith+"%").setParameter("userid", userId);
+                entityManager.createNamedQuery("Walk.findAllForUserStartsWith").setParameter("startsWith", startsWith + "%").setParameter("userid", userId);
         return query.getResultList();
     }
 
@@ -34,12 +34,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(Long id) {
         Query query =
-                entityManager.createNamedQuery("User.findUserByID").setParameter("id",id);
+                entityManager.createNamedQuery("User.findUserByID").setParameter("id", id);
         return (User) query.getResultList().get(0);
     }
 
     @Override
-    @Transactional
     public void addUser(User user) {
         entityManager.persist(user);
     }

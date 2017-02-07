@@ -61,19 +61,4 @@ public class WayPoint {
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof WayPoint)) return false;
-
-        WayPoint wayPoint = (WayPoint) o;
-
-        if (id != wayPoint.id) return false;
-        if (pointname != null ? !pointname.equals(wayPoint.pointname) : wayPoint.pointname != null) return false;
-        if (description != null ? !description.equals(wayPoint.description) : wayPoint.description != null)
-            return false;
-        if (longitude != null ? !longitude.equals(wayPoint.longitude) : wayPoint.longitude != null) return false;
-        return latitude != null ? latitude.equals(wayPoint.latitude) : wayPoint.latitude == null;
-    }
 }

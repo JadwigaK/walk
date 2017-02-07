@@ -38,9 +38,9 @@ public class WalkDAOImplTest {
     Query query1;
 
     @Test
-    public void listWalksWithoutParametersTest(){
+    public void listWalksWithoutParametersTest() {
         //Given
-        Walk walk1 = new Walk("walk 1", new User("j","p"), Arrays.asList(new WayPoint()));
+        Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         Walk walk2 = new Walk("walk 2", new User("k", "r"), Arrays.asList(new WayPoint()));
         when(entityManager.createNamedQuery("Walk.findAll")).thenReturn(query);
         when(query.getResultList()).thenReturn(Arrays.asList(walk1, walk2));
@@ -53,26 +53,26 @@ public class WalkDAOImplTest {
     }
 
     @Test
-    public void listWalksWithParametersTest(){
+    public void listWalksWithParametersTest() {
         //Given
         Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
         when(entityManager.createNamedQuery("Walk.findAllStartsWith")).thenReturn(query);
-        when(query.setParameter("startsWith","walk 1"+"%")).thenReturn(query1);
+        when(query.setParameter("startsWith", "walk 1" + "%")).thenReturn(query1);
         when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
         //When
         List<Walk> list = instance.listWalks("walk 1");
         //Then
         assertEquals(1, list.size());
-        assertEquals(walk1,list.get(0));
+        assertEquals(walk1, list.get(0));
     }
 
     @Test
-    public void getWalkTest(){
+    public void getWalkTest() {
         //Given
         Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
-        Long id = Long.valueOf(1L);
+        Long id = 1L;
         when(entityManager.createNamedQuery("Walk.findByID")).thenReturn(query);
-        when(query.setParameter("id",id)).thenReturn(query1);
+        when(query.setParameter("id", id)).thenReturn(query1);
         when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
         //When
         Walk actualWalk = instance.getWalk(id);
@@ -82,7 +82,7 @@ public class WalkDAOImplTest {
 
 
     @Test
-    public void addNewWalkTest(){
+    public void addNewWalkTest() {
         //Given
         Walk walk = new Walk();
         //When
@@ -92,7 +92,7 @@ public class WalkDAOImplTest {
     }
 
     @Test
-    public void updateWalkTest(){
+    public void updateWalkTest() {
         //Given
         Walk walk = new Walk();
         //When

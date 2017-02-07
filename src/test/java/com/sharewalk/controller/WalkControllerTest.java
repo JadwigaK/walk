@@ -39,48 +39,48 @@ public class WalkControllerTest {
     private UserService userService;
 
     @Test
-    public void getAllWalksGeneralTest(){
+    public void getAllWalksGeneralTest() {
         //given
-        List walks = new ArrayList<>();
+        List<Walk> walks = new ArrayList<Walk>();
         when(walkService.listWalks()).thenReturn(walks);
         //when
         ResponseEntity responseEntity = instance.getAllWalks(null);
         //then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walks, (List)responseEntity.getBody());
+        assertEquals(walks, (List) responseEntity.getBody());
     }
 
 
     @Test
-    public void getAllWalksStartsWithTestOK(){
+    public void getAllWalksStartsWithTestOK() {
         //given
-        List walks = new ArrayList<>();
+        List<Walk> walks = new ArrayList<Walk>();
         when(walkService.listWalks("walk 1")).thenReturn(walks);
         //when
         ResponseEntity responseEntity = instance.getAllWalks("walk 1");
         //then
         verify(walkService).listWalks("walk 1");
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walks,(List)responseEntity.getBody());
+        assertEquals(walks, (List) responseEntity.getBody());
     }
 
     @Test
-    public void getWalkByIDTestOK(){
+    public void getWalkByIDTestOK() {
         //given
-        Long id= Long.valueOf(1L);
+        Long id = 1L;
         Walk walk = new Walk();
         when(walkService.getWalk(id)).thenReturn(walk);
         //when
         ResponseEntity responseEntity = instance.getWalk(id);
         //then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walk, (Walk)responseEntity.getBody());
+        assertEquals(walk, (Walk) responseEntity.getBody());
     }
 
     @Test
-    public void getWalkByIDTestNotFound(){
+    public void getWalkByIDTestNotFound() {
         //given
-        Long id= Long.valueOf(2L);
+        Long id = 2L;
         when(walkService.getWalk(id)).thenReturn(null);
         //when
         ResponseEntity responseEntity = instance.getWalk(id);
@@ -89,9 +89,9 @@ public class WalkControllerTest {
     }
 
     @Test
-    public void addNewWalkOK(){
+    public void addNewWalkOK() {
         //given
-        Long id= Long.valueOf(1L);
+        Long id = 1L;
         Walk walk = new Walk();
         User mockUser = mock(User.class);
         when(userService.getUserById(id)).thenReturn(mockUser);
@@ -100,13 +100,13 @@ public class WalkControllerTest {
         ResponseEntity responseEntity = instance.addNewWalk(id, walk);
         //then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walk, (Walk)(responseEntity.getBody()));
+        assertEquals(walk, (Walk) (responseEntity.getBody()));
     }
 
     @Test
-    public void addNewWalkUserNotFound(){
+    public void addNewWalkUserNotFound() {
         //given
-        Long id= Long.valueOf(2L);
+        Long id = 2L;
         when(userService.getUserById(id)).thenReturn(null);
         //when
         ResponseEntity responseEntity = instance.addNewWalk(id, null);
@@ -115,10 +115,10 @@ public class WalkControllerTest {
     }
 
     @Test
-    public void updateWalkOK(){
+    public void updateWalkOK() {
         //given
-        Long userId= Long.valueOf(1L);
-        Long walkId= Long.valueOf(1L);
+        Long userId = 1L;
+        Long walkId = 1L;
         Walk walk = new Walk();
         User mockUser = mock(User.class);
         Walk mockWalk = mock(Walk.class);
@@ -129,14 +129,14 @@ public class WalkControllerTest {
         //then
         verify(walkService).updateWalk(walk, userId, walkId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(walk, (Walk)(responseEntity.getBody()));
+        assertEquals(walk, (Walk) (responseEntity.getBody()));
     }
 
     @Test
-    public void updateWalkUserNotFound(){
+    public void updateWalkUserNotFound() {
         //given
-        Long userId= Long.valueOf(2L);
-        Long walkId= Long.valueOf(0L);
+        Long userId = 2L;
+        Long walkId = 0L;
         when(userService.getUserById(userId)).thenReturn(null);
         //when
         ResponseEntity responseEntity = instance.updateWalk(userId, walkId, null);
@@ -145,10 +145,10 @@ public class WalkControllerTest {
     }
 
     @Test
-    public void updateWalkWalkNotFound(){
+    public void updateWalkWalkNotFound() {
         //given
-        Long walkId= Long.valueOf(2L);
-        Long userId= Long.valueOf(0L);
+        Long walkId = 2L;
+        Long userId = 0L;
         when(walkService.getWalk(walkId)).thenReturn(null);
         //when
         ResponseEntity responseEntity = instance.updateWalk(userId, walkId, null);
