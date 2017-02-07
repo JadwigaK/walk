@@ -40,9 +40,9 @@ public class CommentDAOImplTest {
     Query query2;
 
     @Test
-    public void listCommentsTest(){
+    public void listCommentsTest() {
         //given
-        Long walkId = Long.valueOf(1L);
+        Long walkId = 1L;
         Comment comment1 = new Comment("com 1", new Walk(), new User());
         Comment comment2 = new Comment("com 2", new Walk(), new User());
         when(entityManager.createNamedQuery("Comment.findByWalkID")).thenReturn(query1);

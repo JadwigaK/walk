@@ -36,10 +36,10 @@ public class CommentControllerTest {
     private WalkService walkService;
 
     @Test
-    public void addCommentTest(){
+    public void addCommentTest() {
         //given
-        Long userId = Long.valueOf(1L);
-        Long walkId = Long.valueOf(1L);
+        Long userId = 1L;
+        Long walkId = 1L;
         Comment mockComment = mock(Comment.class);
         //when
         ResponseEntity responseEntity = instance.addComment(userId, walkId, mockComment);
@@ -49,9 +49,9 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void getWalkCommentsNotFound(){
+    public void getWalkCommentsNotFound() {
         //given
-        Long walkId= Long.valueOf(2L);
+        Long walkId = 2L;
         when(walkService.getWalk(walkId)).thenReturn(null);
         //when
         ResponseEntity responseEntity = instance.listComments(walkId);
@@ -60,9 +60,9 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void getWalkCommentsOK(){
+    public void getWalkCommentsOK() {
         //given
-        Long walkId= Long.valueOf(2L);
+        Long walkId = 2L;
         Walk walk = new Walk();
         when(walkService.getWalk(walkId)).thenReturn(walk);
         //when

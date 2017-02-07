@@ -21,11 +21,11 @@ public class Comment {
     private String comment;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Walk walk;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     public Comment(String comment, Walk walk, User user) {
@@ -71,19 +71,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment [id=" + id + ", comment=" + comment +"]";
+        return "Comment [id=" + id + ", comment=" + comment + "]";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
-
-        Comment comment1 = (Comment) o;
-
-        if (id != comment1.id) return false;
-        if (comment != null ? !comment.equals(comment1.comment) : comment1.comment != null) return false;
-        if (walk != null ? !walk.equals(comment1.walk) : comment1.walk != null) return false;
-        return user != null ? user.equals(comment1.user) : comment1.user == null;
-    }
 }

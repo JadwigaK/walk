@@ -41,8 +41,8 @@ public class CommentServiceImplTest {
     public void addNewCommentTest(){
         //given
         Comment mockComment = mock(Comment.class);
-        Long userId = Long.valueOf(1L);
-        Long walkId = Long.valueOf(2L);
+        Long userId = 1L;
+        Long walkId = 2L;
         //when
         instance.addNewComment(mockComment, userId, walkId);
         //then
@@ -54,8 +54,8 @@ public class CommentServiceImplTest {
     public void listCommentsTest(){
         //given
         List<Comment> comments = new ArrayList<>();
-        Long userId = Long.valueOf(2L);
-        Long walkId = Long.valueOf(2L);
+        Long userId = 2L;
+        Long walkId = 2L;
         User mockUser = mock(User.class);
         Walk mockWalk = mock(Walk.class);
         when(userDAO.getUserById(userId)).thenReturn(mockUser);
