@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Service
-public class CommentServiceImpl implements  CommentService {
+public class CommentServiceImpl implements CommentService {
     private final CommentDAO commentDAO;
     private final UserDAO userDAO;
     private final WalkDAO walkDAO;
@@ -33,7 +33,6 @@ public class CommentServiceImpl implements  CommentService {
     }
 
     @Override
-    @Transactional
     public List<Comment> listComments(Long walkId) {
         return commentDAO.listComments(walkId);
     }
