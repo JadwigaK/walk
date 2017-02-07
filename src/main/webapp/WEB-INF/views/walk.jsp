@@ -57,14 +57,17 @@
         <tr>
             <th width="80">ID</th>
             <th width="120">Walk Name</th>
+            <th width="160">User ID</th>
 
         </tr>
         <c:forEach items="${listWalks}" var="walk">
             <tr>
                 <td>${walk.id}</td>
                 <td>${walk.name}</td>
+                <td>${walk.user_id}</td>
             </tr>
         </c:forEach>
+    </table>
     </table>
 </c:if>
 </body>

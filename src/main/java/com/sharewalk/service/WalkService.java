@@ -5,6 +5,14 @@ import com.sharewalk.model.Walk;
 import java.util.List;
 
 public interface WalkService {
-    void addWalk(Walk walk);
+
     List<Walk> listWalks();
+
+    List<Walk> listWalks(String startsWith);
+
+    Walk getWalk(Long id);
+
+    void addNewWalk(Walk walk, Long userId);
+
+    void updateWalk(Walk walk, Long userId, Long walkId);
 }
