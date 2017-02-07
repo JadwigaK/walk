@@ -27,25 +27,23 @@ public class WalkDAOImpl implements WalkDAO {
     @Override
     public List<Walk> listWalks(String startsWith) {
         Query query =
-                entityManager.createNamedQuery("Walk.findAllStartsWith").setParameter("startsWith",startsWith+"%");
+                entityManager.createNamedQuery("Walk.findAllStartsWith").setParameter("startsWith", startsWith + "%");
         return query.getResultList();
     }
 
     @Override
     public Walk getWalk(Long id) {
         Query query =
-                entityManager.createNamedQuery("Walk.findByID").setParameter("id",id);
+                entityManager.createNamedQuery("Walk.findByID").setParameter("id", id);
         return (Walk) query.getResultList().get(0);
     }
 
     @Override
-    @Transactional
     public void updateWalk(Walk walk) {
         entityManager.merge(walk);
     }
 
     @Override
-    @Transactional
     public void addNewWalk(Walk walk) {
         //mialam tu persist() ale nie dodawało mi nowych walków dla danego usera
         entityManager.merge(walk);

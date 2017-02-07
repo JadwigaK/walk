@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface WalkDAO {
     void addNewWalk(Walk walk);
+
     List<Walk> listWalks();
+
     List<Walk> listWalks(String startsWith);
+
     Walk getWalk(Long id);
+
     void updateWalk(Walk walk);
 
 }

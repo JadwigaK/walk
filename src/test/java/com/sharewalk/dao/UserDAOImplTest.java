@@ -39,12 +39,12 @@ public class UserDAOImplTest {
     Query query2;
 
     @Test
-    public void listUserWalksWithoutParametersTest(){
+    public void listUserWalksWithoutParametersTest() {
         //Given
         Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
-        Long userId = Long.valueOf(1L);
+        Long userId = 1L;
         when(entityManager.createNamedQuery("Walk.findAllForUser")).thenReturn(query);
-        when(query.setParameter("userid",userId)).thenReturn(query1);
+        when(query.setParameter("userid", userId)).thenReturn(query1);
         when(query1.getResultList()).thenReturn(Arrays.asList(walk1));
         //When
         List<Walk> list = instance.listUserWalks(userId);
@@ -54,14 +54,14 @@ public class UserDAOImplTest {
     }
 
     @Test
-    public void listUserWalksWithParametersTest(){
+    public void listUserWalksWithParametersTest() {
         //Given
         Walk walk1 = new Walk("walk 1", new User("j", "p"), Arrays.asList(new WayPoint()));
-        Long userId = Long.valueOf(1L);
+        Long userId = 1L;
         String startsWith = "walk 1";
         when(entityManager.createNamedQuery("Walk.findAllForUserStartsWith")).thenReturn(query);
-        when(query.setParameter("startsWith",startsWith+"%")).thenReturn(query1);
-        when(query1.setParameter("userid",userId)).thenReturn(query2);
+        when(query.setParameter("startsWith", startsWith + "%")).thenReturn(query1);
+        when(query1.setParameter("userid", userId)).thenReturn(query2);
         when(query2.getResultList()).thenReturn(Arrays.asList(walk1));
         //When
         List<Walk> list = instance.listUserWalks(userId, startsWith);
@@ -81,12 +81,12 @@ public class UserDAOImplTest {
     }
 
     @Test
-    public void getUserByIDTest(){
+    public void getUserByIDTest() {
         //Given
         User user1 = new User("j", "p");
-        Long id = Long.valueOf(1L);
+        Long id = 1L;
         when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
-        when(query.setParameter("id",id)).thenReturn(query1);
+        when(query.setParameter("id", id)).thenReturn(query1);
         when(query1.getResultList()).thenReturn(Arrays.asList(user1));
         //When
         User actualUser = instance.getUserById(id);

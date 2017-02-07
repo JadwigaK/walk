@@ -28,10 +28,10 @@ public class UserServiceImplTest {
     private UserDAO userDAO;
 
     @Test
-    public void listUserWalksTest(){
+    public void listUserWalksTest() {
         //given
-        Long userId = Long.valueOf(1L);
-        List walks = new ArrayList<>();
+        Long userId = 1L;
+        List<Walk> walks = new ArrayList<Walk>();
         when(userDAO.listUserWalks(userId)).thenReturn(walks);
         //when
         List<Walk> result = instance.listUserWalks(userId);
@@ -41,9 +41,9 @@ public class UserServiceImplTest {
 
 
     @Test
-    public void listUserByIdTest(){
+    public void listUserByIdTest() {
         //given
-        Long userId = Long.valueOf(1L);
+        Long userId = 1L;
         User user = new User();
         when(userDAO.getUserById(userId)).thenReturn(user);
         //when
@@ -53,7 +53,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void addUserTest(){
+    public void addUserTest() {
         //given
         User user = new User();
         //when

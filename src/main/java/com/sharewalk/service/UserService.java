@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface UserService {
     List<Walk> listUserWalks(Long userId);
+
     List<Walk> listUserWalks(Long userId, String nameStartsWith);
+
     User getUserById(Long id);
+
     void addUser(User user);
 }
