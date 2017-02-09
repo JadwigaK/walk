@@ -16,6 +16,7 @@ public class GradeServiceImpl implements GradeService {
     private final GradeDAO gradeDAO;
 
     private final UserDAO userDAO;
+
     private final WalkDAO walkDAO;
 
     @Autowired
