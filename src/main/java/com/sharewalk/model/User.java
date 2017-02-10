@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table(name = "public.user")
 @NamedNativeQueries({
         @NamedNativeQuery(name = "User.findAll", query = "SELECT * FROM public.user u", resultClass = User.class),
-        @NamedNativeQuery(name = "User.findUserByID", query = "SELECT * FROM public.user u where u.id = :id", resultClass = User.class)
+        @NamedNativeQuery(name = "User.findUserByID", query = "SELECT * FROM public.user u where u.id = :id", resultClass = User.class),
+        @NamedNativeQuery(name="User.findUserByEmail", query="SELECT * FROM public.user u where u.email = :email", resultClass = User.class)
 })
 public class User {
     @Id
@@ -14,7 +15,7 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")

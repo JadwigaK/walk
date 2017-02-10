@@ -30,12 +30,18 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
-
     @Override
     public User getUserById(Long id) {
         Query query =
                 entityManager.createNamedQuery("User.findUserByID").setParameter("id", id);
         return (User) query.getResultList().get(0);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Query query =
+                entityManager.createNamedQuery("User.findUserByEmail").setParameter("email",email);
+        return (User)query.getSingleResult();
     }
 
     @Override
