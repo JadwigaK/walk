@@ -1,7 +1,5 @@
 package com.sharewalk.controller;
 
-import com.sharewalk.dao.UserDAO;
-import com.sharewalk.dao.WalkDAO;
 import com.sharewalk.model.Walk;
 import com.sharewalk.service.UserService;
 import com.sharewalk.service.WalkService;
@@ -10,9 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class WalkController {

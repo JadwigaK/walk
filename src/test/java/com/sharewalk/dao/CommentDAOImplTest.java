@@ -12,7 +12,6 @@ import org.mockito.junit.MockitoRule;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
