@@ -11,7 +11,7 @@ public class MainController {
 
     @RequestMapping(value={"/","/home"}, method = RequestMethod.GET)
     public String home() {
-        return "static/home.html";
+        return "static/views/home.html";
     }
 
 }

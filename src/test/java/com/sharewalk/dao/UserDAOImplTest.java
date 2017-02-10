@@ -87,7 +87,7 @@ public class UserDAOImplTest {
         Long id = 1L;
         when(entityManager.createNamedQuery("User.findUserByID")).thenReturn(query);
         when(query.setParameter("id", id)).thenReturn(query1);
-        when(query1.getResultList()).thenReturn(Arrays.asList(user1));
+        when(query1.getSingleResult()).thenReturn(user1);
         //When
         User actualUser = instance.getUserById(id);
         //Then
