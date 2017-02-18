@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
@@ -30,12 +31,26 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
-
     @Override
     public User getUserById(Long id) {
         Query query =
                 entityManager.createNamedQuery("User.findUserByID").setParameter("id", id);
-        return (User) query.getResultList().get(0);
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Query query =
+                entityManager.createNamedQuery("User.findUserByEmail").setParameter("email", email);
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

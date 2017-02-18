@@ -12,5 +12,7 @@ public interface UserDAO {
 
     User getUserById(Long id);
 
+    User getUserByEmail(String email);
+
     void addUser(User user);
 }

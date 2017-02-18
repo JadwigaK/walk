@@ -1,6 +1,5 @@
 package com.sharewalk.controller;
 
-import com.sharewalk.model.Comment;
 import com.sharewalk.model.Grade;
 import com.sharewalk.service.GradeService;
 import com.sharewalk.service.UserService;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/api")
 public class GradeController {
     private final GradeService gradeService;
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/api")
 public class WalkController {
 
     private final WalkService walkService;
@@ -41,7 +42,7 @@ public class WalkController {
 
     @PostMapping("/users/{user_id}/walks")
     public ResponseEntity<Walk> addNewWalk(@PathVariable("user_id") Long userId, @RequestBody Walk walk) {
-        if (userService.getUserById(userId)==null){
+        if (userService.getUserById(userId) == null) {
             return new ResponseEntity("No User found for User ID: " + userId, HttpStatus.NOT_FOUND);
         } else {
             walkService.addNewWalk(walk, userId);
@@ -50,10 +51,10 @@ public class WalkController {
     }
 
     @PutMapping("/users/{user_id}/walks/{walk_id}")
-    public ResponseEntity<Walk> updateWalk(@PathVariable("user_id") Long userId, @PathVariable("walk_id") Long walkId, @RequestBody Walk walk){
-        if (userService.getUserById(userId)==null) {
+    public ResponseEntity<Walk> updateWalk(@PathVariable("user_id") Long userId, @PathVariable("walk_id") Long walkId, @RequestBody Walk walk) {
+        if (userService.getUserById(userId) == null) {
             return new ResponseEntity("No User found for User ID: " + userId, HttpStatus.NOT_FOUND);
-        }else if (walkService.getWalk(walkId)==null) {
+        } else if (walkService.getWalk(walkId) == null) {
             return new ResponseEntity("No Walk found for Walk ID: " + walkId, HttpStatus.NOT_FOUND);
         } else {
             walkService.updateWalk(walk, userId, walkId);
