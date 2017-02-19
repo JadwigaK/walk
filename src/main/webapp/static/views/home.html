@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Welcome!</h1>
 
-<button id="btn1">Show some walks</button>
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-<script type="text/javascript" src="/static/js/main.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Walks!</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">List Walks</a></li>
+                <li><a href="#">Add walk</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>Sign Up</a></li>
+                <li><a data-toggle="modal" data-target="#loginmodal" id="navLogin">Login</a></li>
+                <li><a data-toggle="modal" data-target="#loginmodal" id="navLogout" style="display: none">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div id="msg"></div>
-<div id="loginmodal">
-    <h1>User Login</h1>
-    <form id="loginform" name="loginform" method="post" action="login">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" class="txtfield" tabindex="1">
+<div class="container">
+    <h3>Something</h3>
+    <button id="btn1" class="btn btn-primary">Show some walks</button>
+    <div id="msg"></div>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" class="txtfield" tabindex="2">
-
-        <div class="center"><input type="submit" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In"
-                                   tabindex="3"></div>
-    </form>
+    <div id="loginmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="loginform" method="post" action="login">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="username" class="control-label col-lg-2">Username</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="username" id="username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label col-lg-2">Password</label>
+                                <div class="col-lg-10">
+                                    <input type="password" name="password" id="password" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <input type="submit" id="loginbtn" class="btn btn-primary" value="Log In">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<script>
-    //just for simple interaction
-    $("#btn1").click(function () {
-
-        $.ajax({
-            type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
-            url: '/api/walks', // the url where we want to POST
-            dataType: 'json', // what type of data do we expect back from the server
-            contentType: "application/json",
-            beforeSend: function (request) {
-                request.setRequestHeader("X-Authorization", getAuthHeader());
-            }
-        })
-        // using the done promise callback
-                .done(function (data) {
-                    alert("Data: " + data[0].name + "\nStatus: " + status);
-                });
-    });
-</script>
-
-
 </body>
 </html>
