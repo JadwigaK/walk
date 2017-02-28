@@ -71,3 +71,41 @@ $(document).ready(function () {
 function getAuthHeader() {
     return "Bearer " + $.cookie("token");
 }
+
+var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var labelIndex = 0;
+var locations = [];
+
+function myMap() {
+    var mapCanvas = document.getElementById("map");
+    var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.2), zoom: 10
+    };
+    var map = new google.maps.Map(mapCanvas, mapOptions);
+}
+
+function initMap() {
+    var canvas = document.getElementById("map");
+    var mapOptions = {
+        center: new google.maps.LatLng(20, 19), zoom: 12
+    };
+    var map = new google.maps.Map(canvas, mapOptions);
+
+    // This event listener calls addMarker() when the map is clicked.
+    google.maps.event.addListener(map, 'click', function(event) {
+        addMarker(event.latLng, map);
+    });
+}
+
+// Adds a marker to the map.
+function addMarker(location, map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+
+    var marker = new google.maps.Marker({
+        position: location,
+        label: labels[labelIndex++ % labels.length],
+        map: map
+    });
+    locations.push({lat: marker.getPosition().lat(), lng: marker.getPosition().lng()});
+}
