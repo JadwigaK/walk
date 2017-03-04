@@ -40,6 +40,30 @@ $(document).ready(function () {
         return false;
     });
 
+    $('#signform').submit(function (event) {
+        /* stop form from submitting normally */
+        event.preventDefault();
+        var data = {};
+        data['email'] = $('#usernameS').val();
+        data['password'] = $('#passwordS').val();
+
+        // process the form
+        $.ajax({
+            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url: '/home/register', // the url where we want to POST
+            data: JSON.stringify(data),
+            dataType: 'json', // what type of data do we expect back from the server
+            contentType: "application/json",
+            success: function (response) {
+                //quit modal
+                $('#signmodal').modal('toggle');
+            }
+        })
+            .done(function (data) {
+                alert("User saved. Now you can login.");
+            });
+    });
+
     $("#navLogout").click(function () {
         $.cookie("token", null);
         //switch logout to login in navbar
@@ -66,6 +90,45 @@ $(document).ready(function () {
                 alert("Data: " + data[0].name + "\nStatus: " + status);
             });
     });
+
+    $('#savewalk').submit(function (event) {
+        event.preventDefault();
+        var walk = {};
+        walk['name'] = $('#walkname').val();
+        for (i = 1; i < locations.length+1; i++) {
+            waypoints.push({pointname: $('#pointname'+i).val(), description: $('#description'+i).val(), longitude: $('#longitude'+i).val(), latitude: $('#latitude'+i).val() });
+        }
+
+        walk['waypoint'] = waypoints;
+        $.ajax({
+            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url: 'api/users/77/walks', // the url where we want to POST
+            data: JSON.stringify(walk),
+            dataType: 'json', // what type of data do we expect back from the server
+            contentType: "application/json",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Authorization", getAuthHeader());
+            }
+        })
+        // using the done promise callback
+            .done(function (data) {
+                alert("Walk saved");
+            });
+    });
+
+    $("#addwalk").click(function () {
+        $(window).trigger('hashchange');
+    });
+
+    $("#mywalks").click(function () {
+        $(window).trigger('hashchange');
+    });
+
+    $(window).on('hashchange', function(){
+        // On every hash change the render function is called with the new hash.
+        // This is how the navigation of our app happens.
+        render(decodeURI(window.location.hash));
+    });
 });
 
 function getAuthHeader() {
@@ -87,7 +150,7 @@ function myMap() {
 function initMap() {
     var canvas = document.getElementById("map");
     var mapOptions = {
-        center: new google.maps.LatLng(20, 19), zoom: 12
+        center: new google.maps.LatLng(50.060, 19.959), zoom: 12
     };
     var map = new google.maps.Map(canvas, mapOptions);
 
@@ -108,4 +171,35 @@ function addMarker(location, map) {
         map: map
     });
     locations.push({lat: marker.getPosition().lat(), lng: marker.getPosition().lng()});
+    addInput(marker.getPosition().lat(), marker.getPosition().lng());
 }
+
+function render(url) {
+    // Get the keyword from the url.
+    var temp = url.split('/')[0];
+
+    var map1 = {
+
+        // The Homepage.
+        '': function() {
+            $('.container1').hide();
+        },
+
+        // Single Products page.
+        '#addwalk': function() {
+            renderAddWalkPage();
+        }
+    };
+
+    // Execute the needed function depending on the url keyword (stored in temp).
+    if(map1[temp]){
+        map1[temp]();
+    }
+}
+
+function renderAddWalkPage(){
+    // Hides and shows products in the All Products Page depending on the data it recieves.
+    $('.container1').show();
+}
+
+

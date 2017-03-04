@@ -9,22 +9,23 @@
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
+    <script type="text/javascript" src="/static/js/addWaypoint.js"></script>
 </head>
 <body>
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
+        <div id="mywalks"class="navbar-header">
             <a class="navbar-brand" href="#">My Walks!</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#">List Walks</a></li>
-                <li><a href="#">Add walk</a></li>
+                <li><a id="addwalk" data-target="#addwalk" href="#addwalk">Add walk</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a>Sign Up</a></li>
+                <li><a data-toggle="modal" data-target="#signmodal" id="navSignUp">Sign Up</a></li>
                 <li><a data-toggle="modal" data-target="#loginmodal" id="navLogin">Login</a></li>
                 <li><a data-toggle="modal" data-target="#loginmodal" id="navLogout" style="display: none">Logout</a></li>
             </ul>
@@ -32,12 +33,34 @@
     </div>
 </nav>
 
-<div class="container">
-    <h3>Something</h3>
-    <button id="btn1" class="btn btn-primary">Show some walks</button>
-    <div id="msg"></div>
 
-    <div id="map"></div>
+<div class="container">
+
+    <div class="container1">
+        <h3>Something</h3>
+        <button id="btn1" class="btn btn-primary">Show some walks</button>
+        <div id="msg"></div>
+        <div id="map"></div>
+        <div id="planner">
+            <form id="savewalk" name="savewalk" method="post" action="save">
+                <label for="walkname">Walk Name:</label>
+                <input type="text" name="walkname" id="walkname" class="txtfield" tabindex="1">
+                <div id="dynamicInput" class="dynamicInput" style="display:none;" >
+                    <form id='waypointsave' name='waypointsave' method='post' action='save'><br>Waypoint<br>
+                    <label for='pointname'>Name:</label>
+                        <input type='text' name='pointname' id='pointname' class='txtfield'>
+                    <label for='description'>Description:</label>
+                        <input type='text' name='description' id='description' class='txtfield'>
+                    <label for='longitude'>Longitude:</label>
+                        <input type='text' name='longitude' id='longitude' class='txtfield'>
+                    <label for='latitude'>Latitude:</label>
+                        <input type='text' name='latitude' id='latitude' class='txtfield'>
+                    </form>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit walk">
+            </form>
+        </div>
+    </div>
 
     <div id="loginmodal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -72,6 +95,41 @@
             </div>
         </div>
     </div>
+
+    <div id="signmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sign up</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="signform" method="post" action="signup">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="username" class="control-label col-lg-2">Username</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="username" id="usernameS" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label col-lg-2">Password</label>
+                                <div class="col-lg-10">
+                                    <input type="password" name="password" id="passwordS" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <input type="submit" id="signbtn" class="btn btn-primary" value="Sign up">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC76NfSKmUoEnOQKiKqnomtblYp-hOxeyw&callback=initMap"></script>
 </body>
