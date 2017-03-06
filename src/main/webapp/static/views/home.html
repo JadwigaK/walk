@@ -45,21 +45,23 @@
             <form id="savewalk" name="savewalk" method="post" action="save">
                 <label for="walkname">Walk Name:</label>
                 <input type="text" name="walkname" id="walkname" class="txtfield" tabindex="1">
-                <div id="dynamicInput" class="dynamicInput" style="display:none;" >
-                    <form id='waypointsave' name='waypointsave' method='post' action='save'><br>Waypoint<br>
-                    <label for='pointname'>Name:</label>
-                        <input type='text' name='pointname' id='pointname' class='txtfield'>
-                    <label for='description'>Description:</label>
-                        <input type='text' name='description' id='description' class='txtfield'>
-                    <label for='longitude'>Longitude:</label>
-                        <input type='text' name='longitude' id='longitude' class='txtfield'>
-                    <label for='latitude'>Latitude:</label>
-                        <input type='text' name='latitude' id='latitude' class='txtfield'>
-                    </form>
-                </div>
+                <div id="waypointList"/>
                 <input type="submit" class="btn btn-primary" value="Submit walk">
             </form>
         </div>
+    </div>
+
+    <div id="dynamicInput" class="dynamicInput" style="display:none;" >
+        <form id='waypointsave' name='waypointsave' method='post' action='save'><br>Waypoint<br>
+            <label for='pointname'>Name:</label>
+            <input type='text' name='pointname' id='pointname' class='txtfield'>
+            <label for='description'>Description:</label>
+            <input type='text' name='description' id='description' class='txtfield'>
+            <label for='longitude'>Longitude:</label>
+            <input type='text' name='longitude' id='longitude' class='txtfield'>
+            <label for='latitude'>Latitude:</label>
+            <input type='text' name='latitude' id='latitude' class='txtfield'>
+        </form>
     </div>
 
     <div id="loginmodal" class="modal fade" role="dialog">

@@ -9,10 +9,10 @@ function addInput(lat, lng) {
         alert("You have reached the limit of adding " + counter + " inputs");
     }
     else {
-        var template = $('#dynamicInput').html();
-        $('form.waypointsave').find("longitude").val(lng);
-        $('form.waypointsave').find("latitude").val(lat);
-        $('#planner').append(template);
+        var template = $('#dynamicInput').clone().prop('id', 'dynamicInput'+counter ).css("display","inline-block");
+        $('#waypointList').append(template);
+        $('#dynamicInput'+counter).find("#longitude").val(lng);
+        $('#dynamicInput'+counter).find("#latitude").val(lat);
         counter++;
     }
 }
