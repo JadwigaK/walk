@@ -124,6 +124,10 @@ $(document).ready(function () {
         $(window).trigger('hashchange');
     });
 
+    $("#listwalk").click(function () {
+        $(window).trigger('hashchange');
+    });
+
     $(window).on('hashchange', function(){
         // On every hash change the render function is called with the new hash.
         // This is how the navigation of our app happens.
@@ -139,19 +143,12 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 var locations = [];
 
-function myMap() {
-    var mapCanvas = document.getElementById("map");
-    var mapOptions = {
-        center: new google.maps.LatLng(51.5, -0.2), zoom: 10
-    };
-    var map = new google.maps.Map(mapCanvas, mapOptions);
-}
-
 function initMap() {
     var canvas = document.getElementById("map");
     var mapOptions = {
         center: new google.maps.LatLng(50.060, 19.959), zoom: 12
     };
+
     var map = new google.maps.Map(canvas, mapOptions);
 
     // This event listener calls addMarker() when the map is clicked.
@@ -183,11 +180,19 @@ function render(url) {
         // The Homepage.
         '': function() {
             $('.container1').hide();
+            $('.container2').hide();
         },
 
         // Single Products page.
         '#addwalk': function() {
-            renderAddWalkPage();
+            $('.container2').hide();
+            $('.container1').show();
+        },
+
+        '#listwalk': function() {
+            $('.container1').hide();
+            $('.container2').show();
+            renderListWalkPage();
         }
     };
 
@@ -197,9 +202,28 @@ function render(url) {
     }
 }
 
-function renderAddWalkPage(){
+function renderListWalkPage(){
     // Hides and shows products in the All Products Page depending on the data it recieves.
-    $('.container1').show();
+    $.ajax({
+        type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
+        url: '/api/walks', // the url where we want to POST
+        dataType: 'json', // what type of data do we expect back from the server
+        contentType: "application/json",
+        beforeSend: function (request) {
+            request.setRequestHeader("X-Authorization", getAuthHeader());
+        }
+    })
+    // using the done promise callback
+        .done(function (data) {
+            var counter =1;
+            for (i = 1; i < data.length; i++) {
+                var template = $('#dynamicInput1').clone().prop('id', 'dynamicInput1' + counter).css("display", "inline-block");
+                $('#walkList').append(template);
+                $('#dynamicInput1'+counter).find('#walkId').html(data[i-1].id);
+                $('#dynamicInput1'+counter).find('#walkNameTable').html(data[i-1].name);
+                counter++;
+            }
+        });
 }
 
 

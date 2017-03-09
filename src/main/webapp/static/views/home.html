@@ -21,7 +21,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#">List Walks</a></li>
+                <li><a id="listwalk" data-target="#listwalk" href="#listwalk">List Walks</a></li>
                 <li><a id="addwalk" data-target="#addwalk" href="#addwalk">Add walk</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -33,10 +33,35 @@
     </div>
 </nav>
 
+<div class="container0">
+    <div class="container2" style="display:none;" >
+        <h3>Something</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Walk name</th>
+            </tr>
+            </thead>
+            <div id="walkList"/>
+        </table>
+    </div>
+
+    <div id="dynamicInput1" class="dynamicInput1" style="display:none;" >
+        <h1>haha</h1>
+        <tbody id="oneRow">
+        <tr>
+            <td id ="walkId"></td>
+            <td id = "walkNameTable"></td>
+        </tr>
+        </tbody>
+    </div>
+</div>
+
 
 <div class="container">
 
-    <div class="container1">
+    <div class="container1" style="display:none;">
         <h3>Something</h3>
         <button id="btn1" class="btn btn-primary">Show some walks</button>
         <div id="msg"></div>
@@ -45,8 +70,8 @@
             <form id="savewalk" name="savewalk" method="post" action="save">
                 <label for="walkname">Walk Name:</label>
                 <input type="text" name="walkname" id="walkname" class="txtfield" tabindex="1">
-                <div id="waypointList"/>
                 <input type="submit" class="btn btn-primary" value="Submit walk">
+                <div id="waypointList"/>
             </form>
         </div>
     </div>
@@ -63,6 +88,7 @@
             <input type='text' name='latitude' id='latitude' class='txtfield'>
         </form>
     </div>
+
 
     <div id="loginmodal" class="modal fade" role="dialog">
         <div class="modal-dialog">
